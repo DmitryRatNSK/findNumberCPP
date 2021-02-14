@@ -5,7 +5,7 @@ using namespace std;
 int main() {
 	int answer, i, trying, number_hints;
 	string hint;
-	answer = 50;
+	answer = time(NULL) % 100;
 	i = 1;
 	number_hints = 0;
 	trying = 101;
@@ -13,9 +13,24 @@ int main() {
 	while (answer != trying) {
 		cout << i << "th try: ";
 		cin >> trying;
+		while (cin.fail()) {
+			cin.clear();
+			cin.ignore(32767, '\n');
+			cout << "Validation ERROR, try again" << endl;
+			cout << i << "th try: ";
+			cin >> trying;
+		}
 		while ((i % 2) == 0 && answer != trying) {
 			cout << "hint?(y/n): ";
 			cin >> hint;
+			while (true) {
+				if (hint != "y" && hint != "n") {
+					cout << "Validation ERROR, try again" << endl;
+					cout << "hint?(y/n): ";
+					cin >> hint;
+				}
+				else break;
+			}
 			if (hint == "y") {
 				switch (number_hints)
 				{
